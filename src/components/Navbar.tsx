@@ -1,6 +1,7 @@
 import { useState, useEffect } from 'react';
 import { motion } from 'framer-motion';
 import { Menu, X } from 'lucide-react';
+import { useLocation, useNavigate, Link } from 'react-router-dom';
 
 const navItems = [
   { name: 'About', href: '#about' },
@@ -13,6 +14,9 @@ const navItems = [
 export default function Navbar() {
   const [isOpen, setIsOpen] = useState(false);
   const [scrolled, setScrolled] = useState(false);
+  
+  const location = useLocation();
+  const navigate = useNavigate();
 
   useEffect(() => {
     const handleScroll = () => {
@@ -21,6 +25,19 @@ export default function Navbar() {
     window.addEventListener('scroll', handleScroll);
     return () => window.removeEventListener('scroll', handleScroll);
   }, []);
+
+  const handleNavClick = (e: React.MouseEvent<HTMLAnchorElement>, href: string) => {
+    e.preventDefault();
+    if (location.pathname !== '/') {
+      navigate('/');
+      setTimeout(() => {
+        document.querySelector(href)?.scrollIntoView({ behavior: 'smooth' });
+      }, 100);
+    } else {
+      document.querySelector(href)?.scrollIntoView({ behavior: 'smooth' });
+    }
+    setIsOpen(false);
+  };
 
   return (
     <nav
@@ -35,12 +52,12 @@ export default function Navbar() {
             animate={{ opacity: 1, x: 0 }}
             className="flex-shrink-0"
           >
-            <a href="#" className="flex items-center gap-2">
+            <Link to="/" className="flex items-center gap-2">
             
               <span className="font-semibold text-slate-200 uppercase tracking-widest text-sm hidden sm:block">
                 Ali Elmayyah
               </span>
-            </a>
+            </Link>
           </motion.div>
           <div className="hidden md:block">
             <motion.div
@@ -52,7 +69,8 @@ export default function Navbar() {
                 <a
                   key={item.name}
                   href={item.href}
-                  className="text-zinc-400 hover:text-white px-3 py-2 rounded-md text-sm font-medium transition-colors"
+                  onClick={(e) => handleNavClick(e, item.href)}
+                  className="text-zinc-400 hover:text-white px-3 py-2 rounded-md text-sm font-medium transition-colors cursor-pointer"
                 >
                   {item.name}
                 </a>
@@ -82,8 +100,8 @@ export default function Navbar() {
               <a
                 key={item.name}
                 href={item.href}
-                onClick={() => setIsOpen(false)}
-                className="text-zinc-300 hover:text-white block px-3 py-2 rounded-md text-base font-medium"
+                onClick={(e) => handleNavClick(e, item.href)}
+                className="text-zinc-300 hover:text-white block px-3 py-2 rounded-md text-base font-medium cursor-pointer"
               >
                 {item.name}
               </a>

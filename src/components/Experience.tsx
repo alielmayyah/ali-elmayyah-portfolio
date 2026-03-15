@@ -1,4 +1,6 @@
 import { motion } from 'framer-motion';
+import { Camera } from 'lucide-react';
+import wonderlearnlogo from "../assets/logos/WonderLearn 2.png";
 
 const experiences = [
   {
@@ -10,7 +12,8 @@ const experiences = [
       "Built dynamic and responsive web interfaces",
       "Contributed to scalable educational platform features"
     ],
-    color: "from-blue-500 to-cyan-500"
+    color: "from-blue-500 to-cyan-500",
+    icon: <img src={wonderlearnlogo} alt="WonderLearn" className="w-8 h-8 object-contain" />
   },
   {
     role: "Graphics Designer",
@@ -19,7 +22,8 @@ const experiences = [
     desc: [
       "Designed graphics and visual assets for educational materials"
     ],
-    color: "from-purple-500 to-pink-500"
+    color: "from-purple-500 to-pink-500",
+    icon: <img src={wonderlearnlogo} alt="WonderLearn" className="w-8 h-8 object-contain" />
   },
   {
     role: "Freelance Photographer",
@@ -28,9 +32,11 @@ const experiences = [
     desc: [
       "Provided professional photography services for various clients"
     ],
-    color: "from-amber-500 to-orange-500"
+    color: "from-amber-500 to-orange-500",
+    icon: <Camera className="w-8 h-8 text-orange-400" />
   }
 ];
+
 
 export default function Experience() {
   return (
@@ -65,9 +71,12 @@ export default function Experience() {
                 <div className="md:ml-10 glass-panel p-6 sm:p-8 rounded-2xl hover:border-zinc-700 transition-colors group">
                   <div className="flex flex-col sm:flex-row sm:items-center justify-between mb-4">
                     <div>
-                      <h3 className="text-2xl font-bold text-slate-200 group-hover:text-blue-400 transition-colors">
-                        {exp.role}
-                      </h3>
+                      <div className="flex items-center gap-3">
+                        {exp.icon}
+                        <h3 className="text-2xl font-bold text-slate-200 group-hover:text-blue-400 transition-colors">
+                          {exp.role}
+                        </h3>
+                      </div>
                       <h4 className="text-lg font-medium text-zinc-400 mt-1">
                         {exp.company}
                       </h4>
