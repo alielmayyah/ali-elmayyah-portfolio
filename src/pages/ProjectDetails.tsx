@@ -1,8 +1,14 @@
-import { useParams, Link } from 'react-router-dom';
-import { motion, AnimatePresence } from 'framer-motion';
-import { ArrowLeft, ExternalLink, X, ChevronLeft, ChevronRight } from 'lucide-react';
-import { projects } from '../data/projects';
-import { useEffect, useState, useCallback } from 'react';
+import { useParams, Link } from "react-router-dom";
+import { motion, AnimatePresence } from "framer-motion";
+import {
+  ArrowLeft,
+  ExternalLink,
+  X,
+  ChevronLeft,
+  ChevronRight,
+} from "lucide-react";
+import { projects } from "../data/projects";
+import { useEffect, useState, useCallback } from "react";
 
 export default function ProjectDetails() {
   const { id } = useParams<{ id: string }>();
@@ -20,39 +26,48 @@ export default function ProjectDetails() {
   const handleKeyDown = useCallback(
     (e: KeyboardEvent) => {
       if (lightboxIndex === null || !project) return;
-      if (e.key === 'Escape') setLightboxIndex(null);
-      if (e.key === 'ArrowRight')
+      if (e.key === "Escape") setLightboxIndex(null);
+      if (e.key === "ArrowRight")
         setLightboxIndex((prev) =>
-          prev !== null ? (prev + 1) % project.gallery.length : null
+          prev !== null ? (prev + 1) % project.gallery.length : null,
         );
-      if (e.key === 'ArrowLeft')
+      if (e.key === "ArrowLeft")
         setLightboxIndex((prev) =>
           prev !== null
             ? (prev - 1 + project.gallery.length) % project.gallery.length
-            : null
+            : null,
         );
     },
-    [lightboxIndex, project]
+    [lightboxIndex, project],
   );
 
   useEffect(() => {
-    window.addEventListener('keydown', handleKeyDown);
-    return () => window.removeEventListener('keydown', handleKeyDown);
+    window.addEventListener("keydown", handleKeyDown);
+    return () => window.removeEventListener("keydown", handleKeyDown);
   }, [handleKeyDown]);
 
   // Lock body scroll when lightbox is open
   useEffect(() => {
-    document.body.style.overflow = lightboxIndex !== null ? 'hidden' : '';
-    return () => { document.body.style.overflow = ''; };
+    document.body.style.overflow = lightboxIndex !== null ? "hidden" : "";
+    return () => {
+      document.body.style.overflow = "";
+    };
   }, [lightboxIndex]);
 
   if (!project) {
     return (
-      <div className="min-h-screen flex items-center justify-center text-white">
-        <div className="text-center space-y-4">
-          <h1 className="text-4xl font-bold text-slate-200">Project Not Found</h1>
-          <p className="text-zinc-400">The project you are looking for does not exist.</p>
-          <Link to="/" className="inline-block mt-4 px-6 py-2 bg-blue-600 hover:bg-blue-500 rounded-full font-medium transition-colors">
+      <div className="flex items-center justify-center min-h-screen text-white">
+        <div className="space-y-4 text-center">
+          <h1 className="text-4xl font-bold text-slate-200">
+            Project Not Found
+          </h1>
+          <p className="text-zinc-400">
+            The project you are looking for does not exist.
+          </p>
+          <Link
+            to="/"
+            className="inline-block px-6 py-2 mt-4 font-medium transition-colors bg-blue-600 rounded-full hover:bg-blue-500"
+          >
             Return Home
           </Link>
         </div>
@@ -64,16 +79,18 @@ export default function ProjectDetails() {
   const closeLightbox = () => setLightboxIndex(null);
   const prev = () =>
     setLightboxIndex((i) =>
-      i !== null ? (i - 1 + project.gallery.length) % project.gallery.length : null
+      i !== null
+        ? (i - 1 + project.gallery.length) % project.gallery.length
+        : null,
     );
   const next = () =>
     setLightboxIndex((i) =>
-      i !== null ? (i + 1) % project.gallery.length : null
+      i !== null ? (i + 1) % project.gallery.length : null,
     );
 
   return (
     <>
-      {/* ─── Lightbox ─── */}
+      {/* Lightbox */}
       <AnimatePresence>
         {lightboxIndex !== null && (
           <motion.div
@@ -87,13 +104,13 @@ export default function ProjectDetails() {
           >
             {/* Scrollable inner container */}
             <div
-              className="relative w-full max-w-5xl mx-auto my-8 px-4 overflow-y-auto max-h-screen"
+              className="relative w-full max-w-5xl max-h-screen px-4 mx-auto my-8 overflow-y-auto"
               onClick={(e) => e.stopPropagation()}
             >
               {/* Close button */}
               <button
                 onClick={closeLightbox}
-                className="fixed top-4 right-4 z-60 p-2 rounded-full bg-zinc-800/80 hover:bg-zinc-700 text-white transition-colors backdrop-blur-sm border border-zinc-700/50"
+                className="fixed p-2 text-white transition-colors border rounded-full top-4 right-4 z-60 bg-zinc-800/80 hover:bg-zinc-700 backdrop-blur-sm border-zinc-700/50"
                 aria-label="Close lightbox"
               >
                 <X size={22} />
@@ -115,7 +132,7 @@ export default function ProjectDetails() {
                 transition={{ duration: 0.2 }}
                 src={project.gallery[lightboxIndex]}
                 alt={`${project.name} screenshot ${lightboxIndex + 1}`}
-                className="w-auto h-full rounded-2xl shadow-2xl mt-12 mb-4 m-auto"
+                className="w-auto h-full m-auto mt-12 mb-4 shadow-2xl rounded-2xl"
               />
             </div>
 
@@ -123,15 +140,21 @@ export default function ProjectDetails() {
             {project.gallery.length > 1 && (
               <>
                 <button
-                  onClick={(e) => { e.stopPropagation(); prev(); }}
-                  className="fixed left-4 top-1/2 -translate-y-1/2 z-60 p-3 rounded-full bg-zinc-800/80 hover:bg-zinc-700 text-white transition-colors backdrop-blur-sm border border-zinc-700/50"
+                  onClick={(e) => {
+                    e.stopPropagation();
+                    prev();
+                  }}
+                  className="fixed p-3 text-white transition-colors -translate-y-1/2 border rounded-full left-4 top-1/2 z-60 bg-zinc-800/80 hover:bg-zinc-700 backdrop-blur-sm border-zinc-700/50"
                   aria-label="Previous image"
                 >
                   <ChevronLeft size={24} />
                 </button>
                 <button
-                  onClick={(e) => { e.stopPropagation(); next(); }}
-                  className="fixed right-4 top-1/2 -translate-y-1/2 z-60 p-3 rounded-full bg-zinc-800/80 hover:bg-zinc-700 text-white transition-colors backdrop-blur-sm border border-zinc-700/50"
+                  onClick={(e) => {
+                    e.stopPropagation();
+                    next();
+                  }}
+                  className="fixed p-3 text-white transition-colors -translate-y-1/2 border rounded-full right-4 top-1/2 z-60 bg-zinc-800/80 hover:bg-zinc-700 backdrop-blur-sm border-zinc-700/50"
                   aria-label="Next image"
                 >
                   <ChevronRight size={24} />
@@ -142,46 +165,54 @@ export default function ProjectDetails() {
         )}
       </AnimatePresence>
 
-      {/* ─── Page ─── */}
+      {/* Page */}
       <motion.main
         initial={{ opacity: 0, y: 20 }}
         animate={{ opacity: 1, y: 0 }}
         exit={{ opacity: 0 }}
-        className="py-32 px-6 sm:px-12 lg:px-24"
+        className="px-6 py-32 sm:px-12 lg:px-24"
       >
-        <div className="max-w-7xl mx-auto">
+        <div className="mx-auto max-w-7xl">
           <Link
             to="/"
-            className="inline-flex items-center gap-2 text-zinc-400 hover:text-white mb-12 transition-colors group"
+            className="inline-flex items-center gap-2 mb-12 transition-colors text-zinc-400 hover:text-white group"
           >
-            <div className="p-2 glass-panel rounded-full group-hover:bg-zinc-800 transition-colors">
+            <div className="p-2 transition-colors rounded-full glass-panel group-hover:bg-zinc-800">
               <ArrowLeft size={20} />
             </div>
             <span className="font-semibold">Back to Portfolio</span>
           </Link>
 
           {/* Header Hero Section */}
-          <div className={`grid gap-12 items-start mb-24 ${
-            project.gallery && project.gallery.length > 0
-              ? 'lg:grid-cols-2'
-              : 'max-w-3xl'
-          }`}>
+          <div
+            className={`grid gap-12 items-start mb-24 ${
+              project.gallery && project.gallery.length > 0
+                ? "lg:grid-cols-2"
+                : "max-w-3xl"
+            }`}
+          >
             <div className="space-y-8">
               <div className="flex items-center gap-6">
-                <div className={`p-4 rounded-2xl bg-gradient-to-br ${project.color} bg-opacity-10 w-24 h-24 flex items-center justify-center flex-shrink-0 shadow-[0_0_30px_rgba(59,130,246,0.15)]`}>
-                  <img src={project.logo} alt={project.name} className="max-w-full max-h-full object-contain" />
+                <div
+                  className={`p-4 rounded-2xl bg-linear-to-br ${project.color} bg-opacity-10 w-24 h-24 flex items-center justify-center shrink-0 shadow-[0_0_30px_rgba(59,130,246,0.15)]`}
+                >
+                  <img
+                    src={project.logo}
+                    alt={project.name}
+                    className="object-contain max-w-full max-h-full"
+                  />
                 </div>
-                <h1 className="text-4xl sm:text-6xl font-extrabold text-slate-200 tracking-tight">
+                <h1 className="text-4xl font-extrabold tracking-tight sm:text-6xl text-slate-200">
                   {project.name}
                 </h1>
               </div>
 
-              <p className="text-xl text-zinc-300 leading-relaxed font-medium">
+              <p className="text-xl font-medium leading-relaxed text-zinc-300">
                 {project.desc}
               </p>
 
               {project.longDesc && (
-                <p className="text-lg text-zinc-500 leading-relaxed">
+                <p className="text-lg leading-relaxed text-zinc-500">
                   {project.longDesc}
                 </p>
               )}
@@ -190,7 +221,7 @@ export default function ProjectDetails() {
                 {project.tech.map((t, j) => (
                   <span
                     key={j}
-                    className="px-4 py-2 text-sm font-semibold text-zinc-200 bg-zinc-800/80 rounded-full border border-zinc-700/50"
+                    className="px-4 py-2 text-sm font-semibold border rounded-full text-zinc-200 bg-zinc-800/80 border-zinc-700/50"
                   >
                     {t}
                   </span>
@@ -221,7 +252,7 @@ export default function ProjectDetails() {
                 initial={{ opacity: 0, scale: 0.95 }}
                 animate={{ opacity: 1, scale: 1 }}
                 transition={{ delay: 0.2 }}
-                className="glass-panel p-2 rounded-2xl relative group overflow-hidden cursor-zoom-in"
+                className="relative p-2 overflow-hidden glass-panel rounded-2xl group cursor-zoom-in"
                 onClick={() => openLightbox(0)}
               >
                 <img
@@ -229,7 +260,7 @@ export default function ProjectDetails() {
                   alt={`${project.name} showcase`}
                   className="w-full h-auto rounded-xl object-cover hover:scale-[1.02] transition-transform duration-700 ease-in-out"
                 />
-                <div className="absolute inset-0 bg-gradient-to-t from-zinc-950/60 to-transparent opacity-0 group-hover:opacity-100 transition-opacity pointer-events-none" />
+                <div className="absolute inset-0 transition-opacity opacity-0 pointer-events-none bg-linear-to-t from-zinc-950/60 to-transparent group-hover:opacity-100" />
                 {/* Zoom hint */}
                 <div className="absolute bottom-4 right-4 px-3 py-1.5 rounded-full bg-black/60 backdrop-blur-sm text-zinc-300 text-xs font-medium opacity-0 group-hover:opacity-100 transition-opacity pointer-events-none">
                   Click to expand
@@ -242,13 +273,13 @@ export default function ProjectDetails() {
           {project.gallery && project.gallery.length > 1 && (
             <div className="mt-20">
               <div className="flex items-center gap-4 mb-12">
-                <h2 className="text-3xl font-bold bg-clip-text text-transparent bg-gradient-to-r from-blue-400 to-purple-500">
+                <h2 className="text-3xl font-bold text-transparent bg-clip-text bg-linear-to-r from-blue-400 to-purple-500">
                   Project Gallery
                 </h2>
-                <div className="h-[1px] bg-gradient-to-r from-blue-500/50 to-transparent flex-1" />
+                <div className="flex-1 h-px bg-linear-to-r from-blue-500/50 to-transparent" />
               </div>
 
-              <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
+              <div className="grid grid-cols-1 gap-6 md:grid-cols-2 lg:grid-cols-3">
                 {project.gallery.slice(1).map((imgUrl, idx) => (
                   <motion.div
                     initial={{ opacity: 0, y: 20 }}
@@ -256,17 +287,17 @@ export default function ProjectDetails() {
                     viewport={{ once: true }}
                     transition={{ delay: idx * 0.1 }}
                     key={idx}
-                    className="glass-panel rounded-2xl overflow-hidden group cursor-zoom-in relative"
+                    className="relative overflow-hidden glass-panel rounded-2xl group cursor-zoom-in"
                     onClick={() => openLightbox(idx + 1)}
                   >
                     <img
                       src={imgUrl}
                       alt={`Screenshot ${idx + 2}`}
-                      className="w-full h-64 object-cover object-top transition-transform duration-500 group-hover:scale-105"
+                      className="object-cover object-top w-full h-64 transition-transform duration-500 group-hover:scale-105"
                     />
                     {/* Hover overlay */}
-                    <div className="absolute inset-0 bg-black/40 opacity-0 group-hover:opacity-100 transition-opacity duration-300 flex items-center justify-center">
-                      <div className="px-4 py-2 rounded-full bg-white/10 backdrop-blur-sm border border-white/20 text-white text-sm font-medium">
+                    <div className="absolute inset-0 flex items-center justify-center transition-opacity duration-300 opacity-0 bg-black/40 group-hover:opacity-100">
+                      <div className="px-4 py-2 text-sm font-medium text-white border rounded-full bg-white/10 backdrop-blur-sm border-white/20">
                         View Full Image
                       </div>
                     </div>

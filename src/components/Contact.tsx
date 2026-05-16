@@ -22,7 +22,7 @@ export default function Contact() {
             {/* Contact Info */}
             <div className="space-y-8">
               <p className="text-lg text-zinc-400 leading-relaxed mb-8">
-                I'm currently looking for new opportunities. Whether you have a question or just want to say hi, I'll try my best to get back to you!
+                I am open to full-stack, front-end, and software engineering opportunities. Whether you have a role, project, or collaboration in mind, I would be happy to connect.
               </p>
 
               <div className="space-y-6">
@@ -37,7 +37,7 @@ export default function Contact() {
                   <div className="p-3 glass-panel rounded-full group-hover:bg-green-500/10 transition-colors">
                     <Phone className="w-6 h-6" />
                   </div>
-                  <span className="text-lg font-medium">+20 1123270680</span>
+                  <span className="text-lg font-medium">+20 112 327 0680</span>
                 </a>
 
                 <div className="flex items-center gap-4 text-zinc-300 group">
@@ -79,7 +79,7 @@ export default function Contact() {
             <p className="text-zinc-500 text-sm">
               Designed & Built by <span className="text-zinc-300 font-semibold mt-1">Ali Elmayyah</span>
             </p>
-            <p className="text-zinc-600 text-xs mt-2">© {new Date().getFullYear()} All Rights Reserved</p>
+            <p className="text-zinc-600 text-xs mt-2">(c) {new Date().getFullYear()} All Rights Reserved</p>
           </div>
         </motion.div>
       </div>

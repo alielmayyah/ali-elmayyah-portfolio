@@ -6,11 +6,11 @@ const experiences = [
   {
     role: "Front-End Developer",
     company: "WonderLearn",
-    date: "2024 – Present",
+    date: "2024 - Present",
     desc: [
-      "Developed an interactive mobile learning application",
-      "Built dynamic and responsive web interfaces",
-      "Contributed to scalable educational platform features"
+      "Developed an interactive mobile learning app for a gamified education platform",
+      "Built a dynamic, responsive website for WonderLearn services and products",
+      "Implemented user-facing features that support progress tracking, learning flows, and engaging educational experiences"
     ],
     color: "from-blue-500 to-cyan-500",
     icon: <img src={wonderlearnlogo} alt="WonderLearn" className="w-8 h-8 object-contain" />
@@ -18,9 +18,9 @@ const experiences = [
   {
     role: "Graphics Designer",
     company: "WonderLearn",
-    date: "2023 – 2024",
+    date: "2023 - 2024",
     desc: [
-      "Designed graphics and visual assets for educational materials"
+      "Created graphics and visual assets for educational materials and marketing content"
     ],
     color: "from-purple-500 to-pink-500",
     icon: <img src={wonderlearnlogo} alt="WonderLearn" className="w-8 h-8 object-contain" />
@@ -28,9 +28,9 @@ const experiences = [
   {
     role: "Freelance Photographer",
     company: "Self-Employed",
-    date: "2017 – 2023",
+    date: "2017 - 2023",
     desc: [
-      "Provided professional photography services for various clients"
+      "Provided professional photography services for a diverse range of clients and events"
     ],
     color: "from-amber-500 to-orange-500",
     icon: <Camera className="w-8 h-8 text-orange-400" />
@@ -65,7 +65,6 @@ export default function Experience() {
                 transition={{ duration: 0.5, delay: i * 0.1 }}
                 className="relative pl-8 md:pl-0"
               >
-                {/* Timeline Dot */}
                 <div className={`absolute left-[-5px] md:left-[-25px] top-2 h-4 w-4 rounded-full bg-gradient-to-r ${exp.color} ring-4 ring-zinc-950`} />
 
                 <div className="md:ml-10 glass-panel p-6 sm:p-8 rounded-2xl hover:border-zinc-700 transition-colors group">
@@ -89,7 +88,7 @@ export default function Experience() {
                   <ul className="space-y-3 mt-6">
                     {exp.desc.map((item, j) => (
                       <li key={j} className="flex items-start text-zinc-400">
-                        <span className="text-blue-500 mr-3 mt-1.5">•</span>
+                        <span className="text-blue-500 mr-3 mt-1.5">*</span>
                         <span className="leading-relaxed">{item}</span>
                       </li>
                     ))}
